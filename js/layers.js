@@ -13,7 +13,7 @@ addLayer("p", {
             mult = new Decimal(1)
 			if (hasAchievement("a", 13)) mult = mult.times(1.1);
 			if (hasAchievement("a", 32)) mult = mult.times(2);
-			if (hasUpgrade("p", 21)) mult = mult.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e50:1.8);
+			if (hasUpgrade("p", 21)) mult = mult.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e50:2);
 			if (hasUpgrade("p", 23)) mult = mult.times(upgradeEffect("p", 23));
 			if (hasUpgrade("p", 41)) mult = mult.times(upgradeEffect("p", 41));
 			if (hasUpgrade("b", 11)) mult = mult.times(upgradeEffect("b", 11));
@@ -59,17 +59,17 @@ addLayer("p", {
 			cols: 4,
 			11: {
 				title: "Newly Prestigious",
-				description: "Generate 1 Point every second, as normal.",
+				description: "Generate 2.5 Points per second, as a faster start.",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?2:1).pow(tmp.h.costExp11) },
 			},
 			12: {
 				title: "Prestigious Boost",
-				description: "Prestige Points boost Point generation, (I'm too lazy to change the ones with formulaic effects.)",
+				description: "Prestige Points boost Point generation, (Its hard to change the ones with formulaic effects, so this is prolly gonna scale)",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?10:1).pow(tmp.h.costExp11) },
 				effect() {
 					if (inChallenge("ne", 11)) return new Decimal(1);
 					
-					let eff = player.p.points.plus(2).pow(0.5);
+					let eff = player.p.points.plus(1.5).pow(0.5175);
 					if (hasUpgrade("g", 14)) eff = eff.pow(1.5);
 					if (hasUpgrade("g", 24)) eff = eff.pow(1.4666667);
 					if (hasUpgrade("g", 34) && player.i.buyables[12].gte(2)) eff = eff.pow(1.4333333)
@@ -104,17 +104,17 @@ addLayer("p", {
 			},
 			13: {
 				title: "Self-Synergy",
-				description: "Points boost their own generation.",
+				description: "Points boost their own generation, weakly",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?50:5).pow(tmp.h.costExp11) },
 				effect() { 
-					let eff = player.points.plus(1).log10().pow(0.75).plus(1);
+					let eff = player.points.plus(10).log9.5().pow(0.795).plus(1);
 					if (hasUpgrade("p", 33)) eff = eff.pow(upgradeEffect("p", 33));
 					if (hasUpgrade("g", 15)) eff = eff.pow(upgradeEffect("g", 15));
 					if (hasUpgrade("hn", 13)) eff = eff.pow(upgradeEffect("hn", 13));
 					if ((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false) eff = eff.pow(75);
 					return eff;
 				},
-				unlocked() { return hasUpgrade("p", 12) },
+				unlocked() { return hasUpgrade("p", 12, 11) },
 				effectDisplay() { return format(tmp.p.upgrades[13].effect)+"x" },
 				formula() { 
 					let exp = new Decimal(1);
@@ -136,7 +136,7 @@ addLayer("p", {
 			},
 			21: {
 				title: "More Prestige",
-				description() { return "Prestige Point gain is increased by "+(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e52":"80")+"%." },
+				description() { return "Prestige Point gain is increased by "+(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?"1e52":"100")+"%." },
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?1e171:20).pow(tmp.h.costExp11) },
 				unlocked() { return hasAchievement("a", 21)&&hasUpgrade("p", 11) },
 			},
