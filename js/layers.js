@@ -1,6 +1,6 @@
 addLayer("p", {
         name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
-        symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
+        symbol: "Pr", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         color: "#31aeb0",
         requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -58,13 +58,13 @@ addLayer("p", {
 			rows: 4,
 			cols: 4,
 			11: {
-				title: "Begin",
-				description: "Generate 1 Point every second.",
+				title: "Newly Prestigious",
+				description: "Generate 1 Point every second, as normal.",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?2:1).pow(tmp.h.costExp11) },
 			},
 			12: {
-				title: "Prestige Boost",
-				description: "Prestige Points boost Point generation.",
+				title: "Prestigious Boost",
+				description: "Prestige Points boost Point generation, (I'm too lazy to change the ones with formulaic effects.)",
 				cost() { return tmp.h.costMult11.times(((Array.isArray(tmp.ma.mastered))?tmp.ma.mastered.includes(this.layer):false)?10:1).pow(tmp.h.costExp11) },
 				effect() {
 					if (inChallenge("ne", 11)) return new Decimal(1);
